@@ -9,9 +9,18 @@ class TweetMiniSerializer(serializers.ModelSerializer):
         fields = ['id', 'content', 'created_at']
 
 
-class UserSerializer(serializers.ModelSerializer):
-    tweets = TweetMiniSerializer(source='tweet_set', many=True, read_only=True)
-
+class BaseUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'tweets']
+        fields = ["id", "username"]
+
+
+class MeSerializer(BaseUserSerializer):
+    pass
+
+
+class UserSerializer(BaseUserSerializer):
+    tweets = TweetMiniSerializer(source='tweet_set', many=True, read_only=True)
+
+    class Meta(BaseUserSerializer.Meta):
+        fields = BaseUserSerializer.Meta.fields + ["tweets"]
