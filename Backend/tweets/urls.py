@@ -8,6 +8,7 @@ from .views import (
     ToggleLikeView,
     MeView,
     ToggleFollowView,
+    RegisterView,
     )
 
 urlpatterns = [
@@ -19,4 +20,5 @@ urlpatterns = [
     path('tweets/<int:pk>/like/', ToggleLikeView.as_view(), name='tweet-like'),
     path('me/', MeView.as_view(), name='me'),
     path("users/<int:user_id>/follow/", ToggleFollowView.as_view()),
+    path("register/", RegisterView.as_view()),
 ]

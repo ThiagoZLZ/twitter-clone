@@ -4,13 +4,19 @@ from .models import Tweet, Like, Follow
 from .serializers import TweetSerializer
 from .permissions import IsAuthorOrReadOnly
 from django.contrib.auth.models import User
-from .serializers_user import UserSerializer
+from .serializers_user import UserSerializer, RegisterSerializer
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 
+#CRIAR USUÁRIO
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
+    authentication_classes = []
 
 # LISTAR E CRIAR TWEETS
 class TweetListCreateView(generics.ListCreateAPIView):
@@ -29,7 +35,7 @@ class TweetDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
 
 # LISTAR USUÁRIOS
-class UserListView(generics.ListAPIView):
+class UserListView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
