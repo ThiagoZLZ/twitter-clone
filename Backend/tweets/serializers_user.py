@@ -1,6 +1,23 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Tweet
+from .models import Tweet, UserProfile
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    profile_image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserProfile
+        fields = ["profile_image"]
+
+    def get_profile_image(self, obj):
+        request = self.context.get("request")
+
+        if obj.profile_image and hasattr(obj.profile_image, 'url'):
+            if request:
+                return request.build_absolute_uri(obj.profile_image.url)
+            return obj.profile_image.url
+
+        return "https://i.pravatar.cc/100"
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,9 +39,11 @@ class TweetMiniSerializer(serializers.ModelSerializer):
 
 
 class BaseUserSerializer(serializers.ModelSerializer):
+    profile = UserProfileSerializer(read_only=True)
+
     class Meta:
         model = User
-        fields = ["id", "username"]
+        fields = ["id", "username", "profile"]
 
 
 class MeSerializer(BaseUserSerializer):

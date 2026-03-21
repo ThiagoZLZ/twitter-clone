@@ -1,3 +1,6 @@
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.urls import path
 from .views import (
     TweetListCreateView, 
@@ -21,4 +24,4 @@ urlpatterns = [
     path('me/', MeView.as_view(), name='me'),
     path("users/<int:user_id>/follow/", ToggleFollowView.as_view()),
     path("register/", RegisterView.as_view()),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

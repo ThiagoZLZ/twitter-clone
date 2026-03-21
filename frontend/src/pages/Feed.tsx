@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import api from "../api/api";
 import twitterlogo from "../assets/twitter_logo.png";
 import { Image, ImgCenter } from "../Styles/auth";
+import { useNavigate } from "react-router-dom";
+import { formatDate } from "../Utils/formatData";
 
 import {
   FeedContainer,
@@ -28,6 +30,7 @@ type Tweet = {
 export default function Feed() {
   const [tweets, setTweets] = useState<Tweet[]>([]);
   const [content, setContent] = useState("");
+  const navigate = useNavigate();
 
   const handleCreateTweet = () => {
     if (!content.trim()) return;
@@ -78,18 +81,6 @@ export default function Feed() {
       });
   };
 
-  function formatDate(dateString: string) {
-    const date = new Date(dateString);
-  
-    return date.toLocaleString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    });
-  }
-
   return (
     <FeedContainer>
       <ImgCenter>
@@ -115,7 +106,12 @@ export default function Feed() {
   
       {tweets.map((tweet) => (
         <TweetCard key={tweet.id}>
-          <TweetAuthor><strong>{tweet.author}</strong></TweetAuthor>
+          <TweetAuthor
+            onClick={() => navigate(`/profile/${tweet.author_id}`)}
+            style={{ cursor: "pointer" }}
+          >
+            <strong>{tweet.author}</strong>
+          </TweetAuthor>
           
           <p>{tweet.content}</p>
 

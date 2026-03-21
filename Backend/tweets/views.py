@@ -44,6 +44,11 @@ class UserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
+
 # FEED GLOBAL (timeline)
 class FeedView(generics.ListAPIView):
     queryset = Tweet.objects.all().order_by('-created_at')
@@ -73,7 +78,11 @@ class MeView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        serializer = UserSerializer(request.user)
+        # serializer = UserSerializer(request.user)
+        serializer = UserSerializer(
+            request.user,
+            context={"request": request}
+        )
         return Response(serializer.data)
     
 # SISTEMA DE FOLLOW / UNFOLLOW
