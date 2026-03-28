@@ -31,13 +31,17 @@ export const Overlay = styled.div`
   font-weight: bold;
 
   opacity: 0;
-  transition: 0.3s;
+  transition: opacity 0.3s ease;
 
   pointer-events: none;
+
+  z-index: 2;
 `;
 
 export const AvatarWrapper = styled.div<{ $clickable: boolean }>`
   position: relative;
+  width: 100px;
+  height: 100px;
   cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
 
   &:hover ${Overlay} {
@@ -50,6 +54,10 @@ export const Avatar = styled.img`
   height: 100px;
   border-radius: 50%;
   display: block;
+  object-fit: cover;
+
+  position: relative;
+  z-index: 1;
 `;
 
 export const UserInfo = styled.div``;
