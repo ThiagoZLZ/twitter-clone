@@ -117,3 +117,17 @@ class ToggleFollowView(APIView):
             return Response({"message": "Unfollowed"}, status=status.HTTP_200_OK)
 
         return Response({"message": "Followed"}, status=status.HTTP_201_CREATED)
+    
+# ADD IMAGEM DE PERFIL
+class UploadProfileImageView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        profile = request.user.profile
+
+        if "profile_image" in request.FILES:
+            profile.profile_image = request.FILES["profile_image"]
+            profile.save()
+            return Response({"message": "Imagem atualizada"})
+
+        return Response({"error": "Nenhuma imagem enviada"}, status=400)

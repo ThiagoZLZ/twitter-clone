@@ -12,6 +12,7 @@ from .views import (
     MeView,
     ToggleFollowView,
     RegisterView,
+    UploadProfileImageView
     )
 
 urlpatterns = [
@@ -24,4 +25,5 @@ urlpatterns = [
     path('me/', MeView.as_view(), name='me'),
     path("users/<int:user_id>/follow/", ToggleFollowView.as_view()),
     path("register/", RegisterView.as_view()),
+    path("me/upload-image/", UploadProfileImageView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

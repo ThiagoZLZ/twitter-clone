@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import api from "../api/api";
 import { useParams } from "react-router-dom";
 import { formatDate } from "../Utils/formatData";
+import * as S from "../Styles/profile";
 
 type Tweet = {
   id: number;
@@ -18,6 +19,8 @@ export default function Profile() {
   const [username, setUsername] = useState("");
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [loggedUserId, setLoggedUserId] = useState<number | null>(null);
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const { id } = useParams();
 
@@ -65,6 +68,30 @@ export default function Profile() {
       });
   }, []);
 
+
+  // ADD IMAGEM //
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+  
+    if (!file) return;
+  
+    const formData = new FormData();
+    formData.append("profile_image", file);
+  
+    api.post("/me/upload-image/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then(() => {
+        fetchMyTweets(); // recarrega dados
+      })
+      .catch((err) => {
+        console.error("Erro ao enviar imagem:", err);
+      });
+  };
+
+
   const handleDelete = (tweetId: number) => {
     api.delete(`/tweets/${tweetId}/`)
       .then(() => fetchMyTweets())
@@ -95,60 +122,85 @@ export default function Profile() {
       .catch((err) => console.error("Erro ao seguir:", err));
   };
 
+  const handleImageClick = () => {
+    if (isMyProfile) {
+      fileInputRef.current?.click();
+    }
+  };
+
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto", padding: 20 }}>
-      {/* FOTO DE PERFIL */}
-      <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-        <img
+    <S.Container>
+      <S.Header>
+      <S.AvatarWrapper $clickable={isMyProfile}>
+        <S.Avatar
           src={profileImage || "https://i.pravatar.cc/100"}
-          alt="Foto de perfil"
-          width={100}
-          height={100}
-          style={{ borderRadius: "50%" }}
+          onClick={handleImageClick}
         />
-        <div>
-          <h2>@{username}</h2>
-          <p>Tweets: {tweets.length}</p>
+
+        {isMyProfile && (
+          <>
+            <S.Overlay>📷 Alterar</S.Overlay>
+
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageUpload}
+              style={{ display: "none" }}
+            />
+          </>
+        )}
+      </S.AvatarWrapper>
+  
+        <S.UserInfo>
+          <S.Username>@{username}</S.Username>
+          <S.TweetsCount>Tweets: {tweets.length}</S.TweetsCount>
+  
           {!isMyProfile && (
-            <button onClick={handleFollow}>
+            <S.Button onClick={handleFollow}>
               Seguir
-            </button>
-)}
-        </div>
-      </div>
-
-      <hr />
-
-      {/* LISTA DE TWEETS */}
+            </S.Button>
+          )}
+        </S.UserInfo>
+      </S.Header>
+  
+      <S.Divider />
+  
       {tweets.map((tweet) => (
-        <div key={tweet.id} style={{ marginBottom: 20 }}>
+        <S.TweetCard key={tweet.id}>
           {editingId === tweet.id ? (
             <>
-              <textarea
+              <S.TextArea
                 value={editContent}
                 onChange={(e) => setEditContent(e.target.value)}
-                style={{ width: "100%", height: 80 }}
               />
-              <button onClick={() => saveEdit(tweet.id)}>Salvar</button>
+              <S.Button onClick={() => saveEdit(tweet.id)}>
+                Salvar
+              </S.Button>
             </>
           ) : (
             <>
-              <p>{tweet.content}</p>
+              <S.TweetText>{tweet.content}</S.TweetText>
+  
               {isMyProfile && (
                 <>
-                  <button onClick={() => startEdit(tweet)}>Editar</button>
-                  <button onClick={() => handleDelete(tweet.id)}>Deletar</button>
+                  <S.Button onClick={() => startEdit(tweet)}>
+                    Editar
+                  </S.Button>
+                  <S.Button onClick={() => handleDelete(tweet.id)}>
+                    Deletar
+                  </S.Button>
                 </>
               )}
             </>
           )}
-
-          <p style={{ fontSize: 12, color: "#555" }}>
+  
+          <S.TweetDate>
             {formatDate(tweet.created_at)}
-          </p>
-          <hr />
-        </div>
+          </S.TweetDate>
+  
+          <S.Divider />
+        </S.TweetCard>
       ))}
-    </div>
+    </S.Container>
   );
 }
