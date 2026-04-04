@@ -46,7 +46,7 @@ Aplicação full-stack inspirada no Twitter, desenvolvida com foco em aprendizad
 ## 🌐 Acesse o projeto
 
 👉 Frontend:
-https://SEU-LINK-VERCEL.vercel.app
+https://twitter-clone-nbj6gj3s3-thiagozlzs-projects.vercel.app/profile/1
 
 👉 Backend (API):
 https://twitter-clone-vdtf.onrender.com/api/
@@ -55,7 +55,8 @@ https://twitter-clone-vdtf.onrender.com/api/
 
 ## 📸 Preview
 
-*(adicione aqui prints do projeto depois — isso aumenta MUITO suas chances com recrutadores)*
+![Alt text](image.png)
+![Alt text](image-1.png)
 
 ---
 
