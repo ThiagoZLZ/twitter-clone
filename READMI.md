@@ -5,8 +5,11 @@ Aplicação full-stack inspirada no Twitter, desenvolvida com foco em aprendizad
 Modo de teste:
 
 1 - crie um novo usuário,
+
 2 - clique em cadastrar,
+
 3 - aguarde 20 segundos para a API carregar
+
 
 ---
 
