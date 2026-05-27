@@ -2,6 +2,11 @@
 
 Aplicação full-stack inspirada no Twitter, desenvolvida com foco em aprendizado e prática de desenvolvimento web moderno. O projeto permite criação de usuários, autenticação, publicação de tweets, interação entre usuários e edição de perfil.
 
+Modo de teste:
+1 - crie um novo usuário
+2 - clique em cadastrar
+3 - aguarde 20 segundos para a API carregar
+
 ---
 
 ## 🚀 Tecnologias utilizadas
