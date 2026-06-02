@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import { Analytics } from "@vercel/analytics/next";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/profile/:id" element={<Profile />} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }
