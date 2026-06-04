@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 import twitterlogo from "../assets/twitter_logo.png";
+import Loader from "../components/Loader";
 
 import {
   Container,
@@ -20,11 +21,14 @@ export default function Login() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
 
     try {
+        setLoading(true);
+
         const response = await api.post("/token/", {
           username,
           password,
@@ -38,7 +42,14 @@ export default function Login() {
       
       } catch (error) {
         console.error("Erro no login:", error);
+        alert("Usuário ou senha invalidos!");
+      } finally {
+        setLoading(false);
       }
+  }
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (
