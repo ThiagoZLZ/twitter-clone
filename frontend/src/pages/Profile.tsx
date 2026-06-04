@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { useParams } from "react-router-dom";
 import { formatDate } from "../Utils/formatData";
@@ -23,6 +24,8 @@ export default function Profile() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const { id } = useParams();
+  const navigate = useNavigate();
+
 
   const fetchMyTweets = () => {
     // Pegar dados do usuário (username + foto)
@@ -128,6 +131,13 @@ export default function Profile() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+
+    navigate("/");
+  };
+
   return (
     <S.Container>
       <S.Header>
@@ -152,6 +162,11 @@ export default function Profile() {
       </S.AvatarWrapper>
   
         <S.UserInfo>
+          {isMyProfile && (
+            <S.LogoutButton onClick={handleLogout}>
+            Sair
+            </S.LogoutButton>
+          )}
           <S.Username>@{username}</S.Username>
           <S.TweetsCount>Tweets: {tweets.length}</S.TweetsCount>
   

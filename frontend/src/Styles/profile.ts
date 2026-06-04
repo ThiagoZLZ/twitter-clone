@@ -60,7 +60,10 @@ export const Avatar = styled.img`
   z-index: 1;
 `;
 
-export const UserInfo = styled.div``;
+export const UserInfo = styled.div`
+  flex: 1;
+  position: relative;
+`;
 
 export const Username = styled.h2`
   margin: 0;
@@ -104,3 +107,25 @@ export const TextArea = styled.textarea`
 `;
 
 export const Divider = styled.hr``;
+
+export const LogoutButton = styled.button`
+  position: absolute;
+  top: 8px;
+  right: 0;
+
+  cursor: pointer;
+  background: #1DA1F2;
+  border: none;
+  color: white;
+  padding: 5px 25px;
+  border-radius: 20px;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background: #0d8ddb;
+  }
+`;
