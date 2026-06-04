@@ -33,6 +33,7 @@ const Spinner = styled.div`
 const Text = styled.p`
   margin-top: 20px;
   text-align: center;
+  color: red;
 `;
 
 export default function Loader() {
