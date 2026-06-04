@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import twitterlogo from "../../assets/twitter_logo.png";
+import Loader from "../../components/Loader";
 
 import {
   Container,
@@ -19,9 +20,12 @@ export default function Register() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   function handleRegister(e: React.FormEvent) {
     e.preventDefault();
+
+    setLoading(true);
   
     // cria usuário
     api.post("/register/", {
@@ -48,7 +52,14 @@ export default function Register() {
       })
       .catch((error) => {
         console.error("Erro ao registrar:", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
+  }
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (
