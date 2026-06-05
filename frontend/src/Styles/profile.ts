@@ -71,7 +71,7 @@ export const Username = styled.h2`
 
 export const TweetsCount = styled.p`
   margin: 5px 0;
-  color: #555;
+  color: #55444;
 `;
 
 export const Button = styled.button`
@@ -110,7 +110,7 @@ export const Divider = styled.hr``;
 
 export const LogoutButton = styled.button`
   position: absolute;
-  top: 8px;
+  top: 45px;
   right: 0;
 
   cursor: pointer;
@@ -129,3 +129,26 @@ export const LogoutButton = styled.button`
     background: #0d8ddb;
   }
 `;
+
+export const BackButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 0;
+
+  cursor: pointer;
+  background: #1DA1F2;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  margin-bottom: 20px;
+
+  &:hover {
+    background: #0d8ddb;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`

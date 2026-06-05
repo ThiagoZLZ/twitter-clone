@@ -25,12 +25,14 @@ export default function Profile() {
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isFollowing, setIsFollowing] = useState(false);
 
 
   const fetchMyTweets = () => {
     // Pegar dados do usuário (username + foto)
     api.get(`/users/${id}/`)
       .then((res) => {
+
         setUsername(res.data.username);
 
         const profileUrl = res.data.profile?.profile_image || null;
@@ -49,6 +51,10 @@ export default function Profile() {
           (tweet: any) => tweet.author_id == id
         );
         setTweets(userTweets);
+
+        if (userTweets.length > 0) {
+          setIsFollowing(userTweets[0].is_following);
+        }
       })
       .catch((err) => {
         console.error("Erro ao buscar tweets:", err);
@@ -120,7 +126,7 @@ export default function Profile() {
   const handleFollow = () => {
     api.post(`/users/${id}/follow/`)
       .then(() => {
-        console.log("Follow/unfollow ok");
+        fetchMyTweets();
       })
       .catch((err) => console.error("Erro ao seguir:", err));
   };
@@ -167,12 +173,15 @@ export default function Profile() {
             Sair
             </S.LogoutButton>
           )}
+          <S.BackButton onClick={() => navigate("/home")}>
+            ← Voltar
+          </S.BackButton>
           <S.Username>@{username}</S.Username>
           <S.TweetsCount>Tweets: {tweets.length}</S.TweetsCount>
   
           {!isMyProfile && (
             <S.Button onClick={handleFollow}>
-              Seguir
+              {isFollowing ? "Deixar de seguir" : "Seguir"}
             </S.Button>
           )}
         </S.UserInfo>
