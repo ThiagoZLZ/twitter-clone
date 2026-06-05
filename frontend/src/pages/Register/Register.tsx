@@ -54,6 +54,7 @@ export default function Register() {
         console.error("Erro ao registrar:", error);
 
         if (error.response?.status === 400) {
+          console.log("Este nome de usuário já está em uso.")
           alert("Este nome de usuário já está em uso.");
         } else {
           alert("Erro ao criar conta. Tente novamente.");
