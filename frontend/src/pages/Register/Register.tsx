@@ -52,6 +52,12 @@ export default function Register() {
       })
       .catch((error) => {
         console.error("Erro ao registrar:", error);
+
+        if (error.response?.status === 400) {
+          alert("Este nome de usuário já está em uso.");
+        } else {
+          alert("Erro ao criar conta. Tente novamente.");
+        }
       })
       .finally(() => {
         setLoading(false);
