@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 import twitterlogo from "../assets/twitter_logo.png";
@@ -22,6 +22,18 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const alreadySeen = localStorage.getItem("first_visit_alert");
+  
+    if (!alreadySeen) {
+      alert(
+        "🚀 Primeira vez por aqui?\n\nClique em 'Criar conta' para testar o projeto."
+      );
+  
+      localStorage.setItem("first_visit_alert", "true");
+    }
+  }, []);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
