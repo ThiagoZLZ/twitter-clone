@@ -54,11 +54,7 @@ Modo de teste:
 
 ## 🌐 Acesse o projeto
 
-👉 Frontend:
-https://twitter-clone-nbj6gj3s3-thiagozlzs-projects.vercel.app/profile/1
-
-👉 Backend (API):
-https://twitter-clone-vdtf.onrender.com/api/
+👉 https://twitter-clone-silk-eight.vercel.app/
 
 ---
 
