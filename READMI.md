@@ -8,7 +8,9 @@ Modo de teste:
 
 2 - clique em cadastrar,
 
-3 - aguarde 20 segundos para a API carregar
+⚠️ Observação:
+
+O backend está hospedado no plano gratuito do Render, após períodos de inatividade, a primeira requisição pode levar cerca de 1 minuto para responder. Após esse carregamento inicial, a aplicação funciona normalmente.
 
 
 ---
